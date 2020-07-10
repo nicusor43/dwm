@@ -6,7 +6,7 @@
 
 /* See LICENSE file for copyright and license details. */
 /* appearance */
-static const unsigned int borderpx    = 2;        /* border pixel of windows */
+static const unsigned int borderpx    = 40;        /* border pixel of windows */
 static const unsigned int snap        = 32;       /* snap pixel */
 static const unsigned int gappx       = 6;        /* pixel gap between clients */
 static const int showbar              = 1;        /* 0 means no bar */
@@ -18,9 +18,9 @@ static const int vertpadbar           = 7;        /* vertical padding for status
  * Arch repos and is listed as a dependency for this build. JoyPixels is also
  * a hard dependency and makes colored fonts and emojis possible.
  */
-static const char *fonts[]            = {"Mononoki Nerd Font:size=9:antialias=true:autohint=true",
+static const char *fonts[]            = {"Mononoki Nerd Font:size=14:antialias=true:autohint=true",
                                          "Hack:size=8:antialias=true:autohint=true",
-                                         "JoyPixels:size=10:antialias=true:autohint=true"
+                                         "JoyPixels:size=15:antialias=true:autohint=true"
 										};
 static const char col_gray1[]         = "#282a36";
 static const char col_gray2[]         = "#282a36"; /* border color unfocused windows */
