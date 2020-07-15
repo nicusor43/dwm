@@ -13,26 +13,31 @@ static const unsigned int gappx = 6;	/* pixel gap between clients */
 static const int showbar = 1;			/* 0 means no bar */
 static const int topbar = 1;			/* 0 means bottom bar */
 static const int horizpadbar = 6;		/* horizontal padding for statusbar */
-static const int vertpadbar = 7;		/* vertical padding for statusbar */
+static const int vertpadbar = 7;
+static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
+static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
+static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
+static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const int smartgaps          = 0;       		/* vertical padding for statusbar */
 /* Mononoki Nerd Font must be installed from AUR nerd-fonts-complete.
  * Otherwise, your default font will be Hack which is found in the standard
  * Arch repos and is listed as a dependency for this build. JoyPixels is also
  * a hard dependency and makes colored fonts and emojis possible.
  */
-static const char *fonts[] = {"Mononoki Nerd Font:size=15:antialias=true:autohint=true",
-							  "Hack:size=14:antialias=true:autohint=true",
-							  "JoyPixels:size=13:antialias=true:autohint=true"};
+static const char *fonts[] = {"Wuncon Siji:size=12",
+							  "Hack:size=10:antialias=true:autohint=true",
+							  "JoyPixels:size=10:antialias=true:autohint=true"};
 static const char col_gray1[] = "#282a36";
 static const char col_gray2[] = "#282a36"; /* border color unfocused windows */
-static const char col_gray3[] = "#96b5b4";
-static const char col_gray4[] = "#d7d7d7";
-static const char col_cyan[] = "#924441"; /* border color focused windows and tags */
+static const char col_gray3[] = "#ffffff";
+static const char col_gray4[] = "#ffffff";
+static const char col_cyan[] = "#008080"; /* border color focused windows and tags */
 /* bar opacity 
  * 0xff is no transparency.
  * 0xee adds wee bit of transparency.
  * Play with the value to get desired transparency.
  */
-static const unsigned int baralpha = 0xee;
+static const unsigned int baralpha = 190;
 static const unsigned int borderalpha = OPAQUE;
 static const char *colors[][3] = {
 	/*               fg         bg         border   */
@@ -98,12 +103,6 @@ static const char *dmenucmd[] = {"dmenu_run", "-p", "Run: ", NULL};
 static const char *termcmd[] = {"alacritty",  NULL};
 static const char *tabtermcmd[] = {"alacritty", NULL};
 
-/* audio control */
-
-static const char *mutecmd[] = {"pactl", "set-sink-mute", "0", "toggle", NULL};
-static const char *volupcmd[] = {"pactl", "set-sink-volume", "0", "+5%", NULL};
-static const char *voldowncmd[] = {"pactl", "set-sink-volume", "0", "-5%", NULL};
-
 /* brightness control*/
 static const char *brupcmd[] = { "brightnessctl", "s", "10%+", NULL};
 static const char *brdowncmd[] = { "brightnessctl", "s", "10%-", NULL};
@@ -129,13 +128,13 @@ static Key keys[] = {
 	{MODKEY, XK_Tab, view, {0}},
 	{MODKEY | ShiftMask, XK_c, killclient, {0}},
 
-	{0, XF86XK_AudioMute, spawn, {.v = mutecmd}},
-	{0, XF86XK_AudioLowerVolume, spawn, {.v = voldowncmd}},
-	{0, XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd}},
+	{0, XF86XK_AudioMute, spawn, CMD("pulsemixer --toggle-mute")},
+	{0, XF86XK_AudioLowerVolume, spawn,CMD("pulsemixer --change-volume -5")},
+	{0, XF86XK_AudioRaiseVolume, spawn,CMD("pulsemixer --change-volume +5")},
 	{0, XF86XK_MonBrightnessUp, spawn, {.v = brupcmd}},
 	{0, XF86XK_MonBrightnessDown, spawn, {.v = brdowncmd}},
 	{0, XK_Print, spawn, CMD("maim | xclip -selection clipboard -t image/png")},
-
+	{ControlMask, XK_Print, spawn, CMD("maim -s -u | xclip -selection clipboard -t image/png -i")},
 	/* Layout manipulation */
 	{MODKEY, XK_Tab, cyclelayout, {.i = -1}},
 	{MODKEY | ShiftMask, XK_Tab, cyclelayout, {.i = +1}},
@@ -161,12 +160,12 @@ static Key keys[] = {
 	{MODKEY | Mod1Mask, XK_b, spawn, CMD("tabbed -r 2 surf -pe x '.surf/html/homepage.html'")},
 	{MODKEY | Mod1Mask, XK_c, spawn, CMD("alacritty -e cmus")},
 	{MODKEY | Mod1Mask, XK_e, spawn, CMD("alacritty -e neomutt")},
-	{MODKEY | Mod1Mask, XK_f, spawn, CMD("st -e vifm")},
+	{MODKEY | Mod1Mask, XK_f, spawn, CMD("firefox")},
 	{MODKEY | Mod1Mask, XK_h, spawn, CMD("st -e htop")},
 	{MODKEY | Mod1Mask, XK_i, spawn, CMD("st -e irssi")},
-	{MODKEY | Mod1Mask, XK_l, spawn, CMD("st -e lynx gopher://distro.tube")},
+	{MODKEY | Mod1Mask, XK_l, spawn, CMD("lutris")},
 	{MODKEY | Mod1Mask, XK_n, spawn, CMD("st -e newsboat")},
-	{MODKEY | Mod1Mask, XK_r, spawn, CMD("st -e rtv")},
+	{MODKEY | Mod1Mask, XK_r, spawn, CMD("alacritty -e ranger")},
 
 	/* Dmenu scripts launched with ALT + CTRL + KEY */
 	{ControlMask, XK_KP_Begin, spawn, CMD("cmus-remote -u")},

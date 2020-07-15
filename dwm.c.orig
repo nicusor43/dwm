@@ -868,7 +868,6 @@ drawstatusbar(Monitor *m, int bh, char* stext) {
 	return ret;
 }
 
-
 int
 drawstatusbar(Monitor *m, int bh, char* stext) {
 	int ret, i, w, x, len;
@@ -2779,8 +2778,6 @@ zoom(const Arg *arg)
 			return;
 	pop(c);
 }
-
-
 
 int
 main(int argc, char *argv[])
